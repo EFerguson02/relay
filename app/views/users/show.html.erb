@@ -1,0 +1,13 @@
+<h1>Recent activities</h1>
+<ul>
+  <% if @user.activities %>
+    <% @user.activities.each do |item| %>
+      <li>
+          <p>Type: <%= item["type"]  %></p>
+          <p>Start Time: <%= item["start_time"] %></p>
+          <p>Duration: <%= item["duration"]  %></p>
+          <p>Total Distance: <%= item["total_distance"]  %></p>
+      </li>
+    <% end %>
+  <% end %>
+</ul>

@@ -1,0 +1,9 @@
+<p>Do you want to sign out of RunKeeper?</p>
+<%= link_to "Yes", "http://runkeeper.com/logout", target: "_blank", id: "logout_runkeeper" %>
+<%= link_to "No", log_in_url %>
+
+<script type="text/javascript">
+$('#logout_runkeeper').on('click', function(){
+  $(location).attr('href', '/');
+});
+</script>
