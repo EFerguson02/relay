@@ -1,12 +1,12 @@
-<h1>Recent activities</h1>
+<h1><%= @user.name %>'s Recent activities</h1>
 <ul>
   <% if @user.activities %>
     <% @user.activities.each do |item| %>
       <li>
           <p>Type: <%= item["type"]  %></p>
           <p>Start Time: <%= item["start_time"] %></p>
-          <p>Duration: <%= item["duration"]  %></p>
-          <p>Total Distance: <%= item["total_distance"]  %></p>
+          <p>Duration: <%= to_min_sec(item["duration"])  %></p>
+          <p>Total Distance: <%= number_with_precision(meters_to_miles(item["total_distance"]), precision: 2) %> miles</p>
       </li>
     <% end %>
   <% end %>

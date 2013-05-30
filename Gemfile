@@ -41,3 +41,17 @@ gem "httparty", "~> 0.11.0"
 
 gem "multi_json", "~> 1.7.3"
 gem "multi_xml", "~> 0.5.3"
+
+gem "seed_dump", "~> 0.4.3"
+
+group :development, :test do
+  gem "rspec-rails", "~> 2.13.0"
+  gem "factory_girl_rails", "~> 4.2.1"
+end
+
+group :test do
+  gem "faker", "~> 1.1.2"
+  gem "capybara", "~> 2.0.2"
+  gem "database_cleaner", "~> 0.9.1"
+  gem "launchy", "~> 2.2.0"
+end

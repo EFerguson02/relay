@@ -21,8 +21,6 @@ class AccessController < ApplicationController
   end
 
   def log_out
-    session.delete(:user_id)
-    session.delete(:user_name)
-    session.delete(:access_token)
+    reset_session
   end
 end
