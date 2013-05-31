@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  attr_accessible :name, :access_token, :rk_id
+  attr_accessible :name, :access_token, :rk_id, :goal
 
   belongs_to :team
 
@@ -26,7 +26,9 @@ class User < ActiveRecord::Base
   end
 
   def all_activities
-    #passes user to Activity.all and returns the callback
+    #fetches all activities from API
+    #passes them to Activity.new
+    #returns an array of all activities
   end
 
   def past_week_activities
@@ -84,14 +86,6 @@ public
 
   def total_distance
     @total_distance
-  end
-
-  def self.this_week(user)
-    #returns an array of activities by one user, the start_time of which is on the current week
-  end
-
-  def self.all(user)
-    #returns all activities by one user
   end
 
 end

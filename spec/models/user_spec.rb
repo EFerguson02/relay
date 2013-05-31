@@ -3,9 +3,10 @@ require 'spec_helper'
 
 describe User do
 
-  user = User.new(  name: "Lauri",
-                             rk_id: "234",
-                             access_token: "4289288392849238")
+  user = User.new(   :rk_id => "19274013",
+                              :access_token => "563cb05a18024f63b63c81d608158cb3",
+                              :name => "Lauri Kinnunen",
+                              :goal => 32.23637893)
 
   it "is valid with a name, rk_id and access_token" do
     expect(user).to be_valid
@@ -29,7 +30,7 @@ describe User do
   end
 
   it "is invalid with a duplicate rk_id" do
-    user = User.create(
+    user1 = User.create(
       name: "Lauri",
       rk_id: 2,
       access_token: 3741839471344)
@@ -41,7 +42,7 @@ describe User do
   end
 
   it "is invalid with a duplicate access_token" do
-    user = User.create(
+    user1 = User.create(
       name: "Lauri",
       rk_id: 1,
       access_token: 3741839471344)
@@ -52,6 +53,17 @@ describe User do
     expect(user2).to have(1).errors_on(:access_token)
   end
 
+  its "this_week_activity returns activities for the current week" do
+    #should fetch all activities from api.
+    #pick ones that are from the current week
+    #pass them to Activity.new.
+    #result should be an array only containing activities from current week
+  end
+
+  its "goal has presicion of two decimals" do
+    user.save
+    expect(user.goal).to eq 32.24
+  end
 
 end
 
@@ -74,8 +86,5 @@ describe Activity do
     expect(activity.duration).to eq '11:20'
   end
 
-  it "should return an array of all fitness activities by one user"
-
-  it "should return an array of all fitness activities by one user for the on-going week"
 
 end
