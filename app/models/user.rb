@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
 
   attr_accessible :name, :access_token, :rk_id
 
+  belongs_to :team
+
   validates_presence_of :name, :access_token, :rk_id
   validates_uniqueness_of :rk_id, :access_token
 
@@ -23,6 +25,10 @@ class User < ActiveRecord::Base
     return activities["items"]
   end
 
+  def all_activities
+    #passes user to Activity.all and returns the callback
+  end
+
   def past_week_activities
     #passes user to Activity.this_week and returns the callback
   end
@@ -31,11 +37,11 @@ end
 
 class Activity
 
-  def initialize( type, start_time, duration, total_distance )
-    @type = type
-    @start_time = to_time(start_time)
-    @duration = to_min_sec(duration)
-    @total_distance = meters_to_miles(total_distance)
+  def initialize( stats )
+    @type = stats[:type]
+    @start_time = to_time(stats[:start_time])
+    @duration = to_min_sec(stats[:duration])
+    @total_distance = stats[:total_distance]
   end
 
 private
@@ -47,7 +53,7 @@ private
 
   def to_min_sec(float)
     minutes = (float/60).floor.to_s
-    seconds = (float%60).round(0).to_s
+    seconds = (float%60).floor.to_s
     seconds = '0' + seconds if seconds.to_i < 10
     return "#{minutes}:#{seconds}"
   end
@@ -63,6 +69,22 @@ private
   end
 
 public
+
+  def type
+    @type
+  end
+
+  def start_time
+    @start_time
+  end
+
+  def duration
+    @duration
+  end
+
+  def total_distance
+    @total_distance
+  end
 
   def self.this_week(user)
     #returns an array of activities by one user, the start_time of which is on the current week

@@ -1,12 +1,19 @@
 require 'spec_helper'
 
+
 describe User do
+
+  user = User.new(  name: "Lauri",
+                             rk_id: "234",
+                             access_token: "4289288392849238")
+
   it "is valid with a name, rk_id and access_token" do
-    user = User.new(
-      name: "Lauri",
-      rk_id: "234",
-      access_token: "4289288392849238")
     expect(user).to be_valid
+  end
+
+  it "should be automatically assigned to a team" do
+    user.save
+    expect(user.team).to be_present
   end
 
   it "is invalid without a name" do
@@ -45,15 +52,30 @@ describe User do
     expect(user2).to have(1).errors_on(:access_token)
   end
 
+
 end
 
 describe Activity do
 
-  it "should convert Health Graph date strings to Time objects"
-  it "should convert seconds to minutes and seconds"
-  it "should convert meters to miles"
+  activity = Activity.new(  type: "Running",
+                                    start_time: "Mon, 13 May 2013 02:13:57",
+                                    duration: 680.841,
+                                    total_distance: 4.47598128055325)
+
+  it "should convert Health Graph date strings to Time objects" do
+    expect(activity.start_time.class).to eq Time
+  end
+
+  it "should return total_distance as miles with the presicion of two decimals" do
+    expect(activity.total_distance).to eq 4.48
+  end
+
+  it "should return duration as minutes:seconds (eg. '12:30')" do
+    expect(activity.duration).to eq '11:20'
+  end
+
   it "should return an array of all fitness activities by one user"
+
   it "should return an array of all fitness activities by one user for the on-going week"
-  it ""
 
 end
