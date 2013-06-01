@@ -3,6 +3,6 @@
 <ul>
 <% @users.each do |user| %>
   <li>Username: <%= link_to user.name, user_url(user.id) %></li>
-  <li>Total Distance: <%= number_with_precision(meters_to_miles(weekly_total_distance(user.activities, 'Cycling')), precision: 2) %></li>
+  <li>Total Distance: <%= user.activities.total_distance %></li>
 <% end %>
 </ul>

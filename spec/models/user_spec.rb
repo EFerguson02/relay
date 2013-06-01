@@ -12,7 +12,7 @@ describe User do
     expect(user).to be_valid
   end
 
-  it "should be automatically assigned to a team" do
+  it "is automatically assigned to a team" do
     user.save
     expect(user.team).to be_present
   end
@@ -53,10 +53,17 @@ describe User do
     expect(user2).to have(1).errors_on(:access_token)
   end
 
+  its "access_token can be used to fetch data from API" do
+    api_activities = JSON.parse(HTTParty.get("https://api.runkeeper.com/fitnessActivities?access_token=#{user.access_token}"))
+    puts api_activities["items"].first
+    expect(api_activities["items"].first.class).to eq Hash
+  end
+
+  its "activities returns all activities by the user" do
+      expect(user.activities.first.class).to eq Activity
+  end
+
   its "this_week_activity returns activities for the current week" do
-    #should fetch all activities from api.
-    #pick ones that are from the current week
-    #pass them to Activity.new.
     #result should be an array only containing activities from current week
   end
 
@@ -69,22 +76,36 @@ end
 
 describe Activity do
 
-  activity = Activity.new(  type: "Running",
-                                    start_time: "Mon, 13 May 2013 02:13:57",
-                                    duration: 680.841,
-                                    total_distance: 4.47598128055325)
+  activity = Activity.new(  {"type" => "Running",
+                                    "start_time" => "Mon, 13 May 2013 02:13:57",
+                                    "duration" => 680.841,
+                                    "total_distance" => 4000.47598128055325 })
 
   it "should convert Health Graph date strings to Time objects" do
     expect(activity.start_time.class).to eq Time
   end
 
-  it "should return total_distance as miles with the presicion of two decimals" do
-    expect(activity.total_distance).to eq 4.48
+  its "distance is in miles with presicion of two decimals" do
+    expect(activity.distance).to eq  2.49
   end
 
-  it "should return duration as minutes:seconds (eg. '12:30')" do
+  its "duration is minutes:seconds (eg. '12:30')" do
     expect(activity.duration).to eq '11:20'
   end
 
+end
+
+describe Array do
+
+  activity = Activity.new(  {"type" => "Running",
+                                    "start_time" => "Mon, 13 May 2013 02:13:57",
+                                    "duration" => 680.841,
+                                    "total_distance" => 4000.47598128055325 })
+
+  its "total_distance is the sum of activities.distance" do
+    activities = [activity, activity, activity]
+    expect(activities.total_distance).to eq 2.49*3
+  end
 
 end
+

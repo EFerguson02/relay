@@ -1,11 +1,11 @@
 class User < ActiveRecord::Base
 
-  attr_accessible :name, :access_token, :rk_id, :goal
+  attr_accessible :name, :access_token, :rk_id, :goal, :team_id
 
   belongs_to :team
 
   validates_presence_of :name, :access_token, :rk_id
-  validates_uniqueness_of :rk_id, :access_token
+  #validates_uniqueness_of :rk_id, :access_token
 
   def self.create_from_rk(token, user_Id, name)
     user = User.new
@@ -16,23 +16,28 @@ class User < ActiveRecord::Base
     return user
   end
 
-  def activities(time_frame = nil)
-
+  def activities
     #return all actiities by this user
-    #return activities for current week if time_frame == :this_week
 
-    activities = JSON.parse(HTTParty.get("https://api.runkeeper.com/fitnessActivities?access_token=#{self.access_token}"))
-    return activities["items"]
+    activities = []
+    api_activities = JSON.parse(HTTParty.get("https://api.runkeeper.com/fitnessActivities?access_token=#{self.access_token}"))
+    api_activities["items"].each do |item|
+      activity = Activity.new(item)
+      activities.push(activity)
+    end
+    return activities
   end
 
-  def all_activities
-    #fetches all activities from API
-    #passes them to Activity.new
-    #returns an array of all activities
-  end
-
-  def past_week_activities
-    #passes user to Activity.this_week and returns the callback
+  def this_week_activities
+    #should fetch all activities from api.
+    activities = []
+    api_activities = JSON.parse(HTTParty.get("https://api.runkeeper.com/fitnessActivities?access_token=#{self.access_token}"))
+    api_activities["items"].each do |item|
+    #pass them to Activity.new
+      activity = Activity.new(item)
+      activities.push(activity)
+    #pick ones that are from the current week
+    end
   end
 
 end
@@ -40,10 +45,14 @@ end
 class Activity
 
   def initialize( stats )
-    @type = stats[:type]
-    @start_time = to_time(stats[:start_time])
-    @duration = to_min_sec(stats[:duration])
-    @total_distance = stats[:total_distance]
+    @type = stats["type"]
+    @start_time = stats["start_time"]
+    if stats["duration"]
+      @duration = to_min_sec(stats["duration"])
+    else
+      @duration = "0:00"
+    end
+    stats["total_distance"] ? @distance = meters_to_miles(stats["total_distance"]) : @distance = 0.00
   end
 
 private
@@ -53,9 +62,9 @@ private
     #returns a Time object of the same date
   end
 
-  def to_min_sec(float)
-    minutes = (float/60).floor.to_s
-    seconds = (float%60).floor.to_s
+  def to_min_sec(num)
+    minutes = (num/60).floor.to_s
+    seconds = (num%60).floor.to_s
     seconds = '0' + seconds if seconds.to_i < 10
     return "#{minutes}:#{seconds}"
   end
@@ -84,18 +93,22 @@ public
     @duration
   end
 
-  def total_distance
-    @total_distance
+  def distance
+    @distance
   end
 
 end
 
 class Array
 
-  def distance
-    # if all items.class == Activity
-    # return the sum of total distances
-    # else raise exception: "Not an Activity object"
+  def total_distance
+    sum = 0.00
+    self.each do |activity|
+      if activity.class == Activity
+        sum += activity.distance
+      end
+    end
+    return sum
   end
 
 end
