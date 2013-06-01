@@ -9,4 +9,8 @@ Relay::Application.routes.draw do
 
   resources :users
 
+  get "/home", to: 'Home#index' , as: 'homepage'
+
+  get '/goal_page', to: 'Home#goal_page' , as: 'goal_page'
+
 end

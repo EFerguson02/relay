@@ -10,12 +10,14 @@ Team.create([
 
 
 User.create([
-  { :rk_id => "19274013", :access_token => "563cb05a18024f63b63c81d608158cb3", :name => "Lauri Kinnunen", :created_at => "2013-05-10 08:14:26", :updated_at => "2013-05-10 08:14:26", :team_id => 1},
-  { :rk_id => "19325936", :access_token => "bd24dc1c9e4640d597f68fb8efed166e", :name => "George Pittas", :created_at => "2013-05-10 22:06:26", :updated_at => "2013-05-10 22:06:26", :team_id => 1 },
-  { :rk_id => "19504366", :access_token => "bf4440aad7b74597978834ca24ea5d98", :name => "Jacob", :created_at => "2013-05-14 22:15:45", :updated_at => "2013-05-14 22:15:45", :team_id => 1 },
-  { :rk_id => "19438729", :access_token => "480e0e8315da458c9b6580ebef5e0a7a", :name => "MJBP", :created_at => "2013-05-16 20:58:06", :updated_at => "2013-05-16 20:58:06", :team_id => 2 },
-  { :rk_id => "19472361", :access_token => "ffde6f6c817a4746a0f6bcefc5b15a23", :name => "connor", :created_at => "2013-05-16 20:59:29", :updated_at => "2013-05-16 20:59:29", :team_id => 2 },
-  { :rk_id => "19857129", :access_token => "301eb252f6724d20ace22e209576cc86", :name => "Test User", :created_at => "2013-05-23 19:36:39", :updated_at => "2013-05-23 19:36:39", :team_id => 2 }
+  { :rk_id => "19274013", :access_token => "563cb05a18024f63b63c81d608158cb3", :name => "Lauri Kinnunen", :created_at => "2013-05-10 08:14:26", :updated_at => "2013-05-10 08:14:26", :team_id => 1 , :goal => 15},
+  { :rk_id => "19325936", :access_token => "bd24dc1c9e4640d597f68fb8efed166e", :name => "George Pittas", :created_at => "2013-05-10 22:06:26", :updated_at => "2013-05-10 22:06:26", :team_id => 1, :goal => 15 },
+  { :rk_id => "19504366", :access_token => "bf4440aad7b74597978834ca24ea5d98", :name => "Jacob", :created_at => "2013-05-14 22:15:45", :updated_at => "2013-05-14 22:15:45", :team_id => 1, :goal => 15 },
+  { :rk_id => "19438729", :access_token => "480e0e8315da458c9b6580ebef5e0a7a", :name => "MJBP", :created_at => "2013-05-16 20:58:06", :updated_at => "2013-05-16 20:58:06", :team_id => 2, :goal => 15 },
+  { :rk_id => "19472361", :access_token => "ffde6f6c817a4746a0f6bcefc5b15a23", :name => "connor", :created_at => "2013-05-16 20:59:29", :updated_at => "2013-05-16 20:59:29", :team_id => 2, :goal => 15 },
+  { :rk_id => "19857129", :access_token => "301eb252f6724d20ace22e209576cc86", :name => "Test User", :created_at => "2013-05-23 19:36:39", :updated_at => "2013-05-23 19:36:39", :team_id => 2, :goal => 15 } ,
+  { :rk_id => "20163721", :access_token => "01b6bfa0399d4d8a968ba8c4bcd8e8b4", :name => "Edward Ferguson", :created_at => "2013-05-23 19:36:39", :updated_at => "2013-05-23 19:36:39", :team_id => 2 , :goal => 15 }
+
 ], :without_protection => true )
 
 

@@ -1,0 +1,15 @@
+<h1>Welcome to BeeFit, <%= @user.name %></h1>
+<h2>Running</h2>
+<br>
+<h3>Your Goals: <%= @user.goal %>miles</h3>
+<p>Percentage completed <%= @perc %>%</p>
+
+<h3><%= @team.name %>'s Goals: <%= @team.goal %> miles </h3>
+<p>Percentage Completed <%= @perc_t %>%</p>
+<% unless @memb_comp.empty? %>
+  <% @memb_comp.each do |x| %>
+    <li><%= x.name %> has completed their goal!</li>
+  <% end %>
+<% end %>
+<br>
+<%= render "teams/leaderboard" %>

@@ -7,6 +7,11 @@ class User < ActiveRecord::Base
   validates_presence_of :name, :access_token, :rk_id
   #validates_uniqueness_of :rk_id, :access_token
 
+  def goal_percentage
+    return ((self.activities.total_distance/self.goal) * 100.0).round(2)
+
+  end
+
   def self.create_from_rk(token, user_Id, name)
     user = User.new
     user.name = name
@@ -99,6 +104,8 @@ public
 
 end
 
+
+
 class Array
 
   def total_distance
@@ -108,7 +115,7 @@ class Array
         sum += activity.distance
       end
     end
-    return sum
+    return sum.round(2)
   end
 
 end

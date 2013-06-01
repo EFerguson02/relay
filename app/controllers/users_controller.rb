@@ -10,4 +10,12 @@ def index
   @users = User.all
 end
 
+def update
+  @user = User.find_by_name(session[:user_name])
+  @user.goal = params['user']['goal']
+  @user.save
+  redirect_to homepage_url
+
+end
+
 end

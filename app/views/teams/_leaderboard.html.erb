@@ -8,12 +8,16 @@
     <th>Members</th>
   </tr>
 
-<br>
 
 <% @sorted_teams.each_with_index do |team , x| %>
+  <% if team.name == @team.name %>
+  <h4>Your team <%= team.name %> is ranked # <%= x + 1 %></h4>
+  <%end  %>
+
+<% if x == @num-1 || x == @num || x== @num %>
   <tr>
-    <% if x == 0 %>
-      <h1>Leader is <%= team.name %></h1>
+    <% if x == 0%>
+      <h2>Current leader is <%= team.name %></h2>
     <% end %>
     <td><%= link_to team.name , team %></td>
 
@@ -25,13 +29,10 @@
         <%= team.users[x].name %> ||
       <% end %>
     </td>
+  <% end %>
 
 
     <td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Team', new_team_path %>

@@ -1,9 +1,19 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Name:</b>
-  <%= @team.name %>
+  <h2><b>Team <%= @team.name %></b></h2>
+  <h4><%= link_to "go to the leaderboard" , teams_url %></h4>
 </p>
+
+<p>Team goal = <%= @team.goal %> miles</p>
+<p>Percent Acheived = <%= @team.acheived_perc %>%</p>
+
+<h3>Team Members:</h3>
+<% @team.users.each do |x| %>
+<li><%= x.name %>
+<%= x.activities.total_distance.round(2) %> || Goal Percentage Acheived: <%= x.goal_percentage %>%
+</li>
+<% end %>
 
 
 <%= link_to 'Edit', edit_team_path(@team) %> |
