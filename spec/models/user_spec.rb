@@ -82,6 +82,7 @@ describe Activity do
                                     "total_distance" => 4000.47598128055325 })
 
   it "should convert Health Graph date strings to Time objects" do
+    puts activity.start_time
     expect(activity.start_time.class).to eq Time
   end
 
